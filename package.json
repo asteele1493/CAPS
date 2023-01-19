@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "start": "node src/hub.js",
+    "start": "concurrently npm:hub npm:driver npm:vendor",
+    "hub": "node src/hub.js",
     "vendor": "node src/vendor/index.js",
     "driver": "node src/driver/index.js",
-    "test" : "jest"
+    "test": "jest"
   },
   "dependencies": {
     "@types/node": "^18.11.18",
