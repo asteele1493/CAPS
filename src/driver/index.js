@@ -1,4 +1,5 @@
-const { events, chance } = require('../events');
+const { events, chance } = require('../utils');
+const { io } = require('socket.io-client');
 
 function deliver(orderId){
   console.log('Driver has now finished delivery');

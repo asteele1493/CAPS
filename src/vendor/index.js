@@ -1,4 +1,4 @@
-const { events, chance } = require('../events');
+const { events, chance } = require('../utils');
 //send pickup event
 
 function sendPickup() {
