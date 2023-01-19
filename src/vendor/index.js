@@ -1,5 +1,9 @@
-const { events, chance } = require('../utils');
-//send pickup event
+const { chance, EVENT_NAMES } = require('../utils');
+
+const { io } = require('socket.io-client');
+
+const events = io('ws://localhost:3123');
+
 
 function sendPickup() {
   const event = {
@@ -9,15 +13,15 @@ function sendPickup() {
     address: chance.address(),
   };
 //takes the name of the pickup event & the args we want to sent with it
-  events.emit('pickup', event);
-  console.log(event);
+  events.emit(EVENT_NAMES.pickup, event);
+  console.log('Vendor is asking for a pickup!', event);
 }
 
 function acknowledgeDelivery(orderId){
   console.log('Thank you for the delivery!', orderId);
 }
 function startVendor() {
-  events.on('delivered', acknowledgeDelivery);
+  events.on(EVENT_NAMES.delivered, acknowledgeDelivery);
 
   console.log("Vendor is ready!");
   function ready(){
@@ -28,4 +32,4 @@ function startVendor() {
   ready();
 }
 
-module.exports = { startVendor };
+startVendor();

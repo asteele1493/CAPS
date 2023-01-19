@@ -1,4 +1,5 @@
-const { events, EVENT_NAMES } = require('../events');
+const { EVENT_NAMES } = require('../utils');
+
 const {
   toTest: { deliver, handlePickup },
 } = require('./index');
@@ -7,6 +8,8 @@ jest.useFakeTimers();
 
 test('Driver deliver', () => {
   //Arrange
+  const events = io('ws://localhost:3123');
+
   const emitMock = jest.spyOn(events, 'emit');
 
   //Act
@@ -17,6 +20,8 @@ test('Driver deliver', () => {
 });
 
 test('Driver handlePickup', () => {
+  const events = io('ws://localhost:3123');
+
   //Arrange
   const emitMock = jest.spyOn(events, 'emit');
 

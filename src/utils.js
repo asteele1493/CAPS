@@ -1,9 +1,8 @@
-const { EventEmitter } = require('events');
 const chance = require('chance')();
 
+const EVENT_NAMES = {
+  pickup: 'pickup',
+  delivered: 'delivered',
+};
 
-const events = new EventEmitter();
-
-
-
-module.exports = { chance };
+module.exports = { chance, EVENT_NAMES };
