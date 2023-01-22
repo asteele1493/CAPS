@@ -1,41 +1,40 @@
-const { EVENT_NAMES } = require('../utils');
+const { EVENT_NAMES } = require("../utils");
 
-const {
-  toTest: { deliver, handlePickup },
-} = require('./index');
+const { deliver, handlePickup, events } = require("./index");
 
 jest.useFakeTimers();
 
-test('Driver deliver', () => {
-  //Arrange
-  const events = io('ws://localhost:3123');
+describe("Tests for driver", () => {
+  test("Driver Pickup", () => {
+    //Arrange
 
-  const emitMock = jest.spyOn(events, 'emit');
+    const emitMock = jest.spyOn(events, "emit");
 
-  //Act
-  deliver('1234');
+    //Act
+    handlePickup({
+      store: 'test',
+      orderId: '1234',
+      customer: 'test',
+      address: '123 test',
+    });
 
-  //Assert
-  expect(emitMock).toHaveBeenCalledWith(EVENT_NAMES.delivered, '1234');
-});
+    jest.runAllTimers();
 
-test('Driver handlePickup', () => {
-  const events = io('ws://localhost:3123');
-
-  //Arrange
-  const emitMock = jest.spyOn(events, 'emit');
-
-  //Act
-  handlePickup({
-    store: 'test',
-    orderId: '1234',
-    customer: 'customer',
-    address: '123 Main',
+    //Assert
+    expect(emitMock).toHaveBeenCalledWith(EVENT_NAMES.delivered, "1234");
   });
 
-  //Timers - skip setTimeout
-  jest.runAllTimers();
+  test("Driver delivery", () => {
+    //Arrange
+    const emitMock = jest.spyOn(events, "emit");
 
-  //Assert
-  expect(emitMock).toHaveBeenCalledWith(EVENT_NAMES.delivered, '1234');
+    //Act
+  delivered('1234');
+
+    //Timers - skip setTimeout
+    jest.runAllTimers();
+
+    //Assert
+    expect(emitMock).toHaveBeenCalledWith(EVENT_NAMES.delivered, "1234");
+  });
 });
